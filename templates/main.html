@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ url_for('static', path='/css/main.css') }}" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="{{ url_for('static', path='/js/plotly.min.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ url_for('static', path='/js/main.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ url_for('static', path='/js/htmx.min.js') }}"></script>
+    {% if favorite_index != None %}
+    <script type="text/javascript">
+        favorite_index = '{{ favorite_index }}'
+    </script>
+    {% endif%}
+    <title>main </title>
+</head>
+<body>
+    <div class="topbar">
+        <div id="index_name_box">
+            <h3 id="index_name">fake name</h3>
+        </div>
+        <button class="deconection-button" id="deconection-button">
+            <img src="{{ url_for('static', path='/images/deco.png') }}" width="100%" height="100%">
+        </button>
+    </div>
+    <div class="grid-container">
+        <div class="sidebar">
+            <button class="sidebar-button"><</button>
+            <div class="sidebar-content">
+                <div class="margine"></div>
+
+                <h class="index-select">Choisissez votre index</h>
+                <form>
+                    <select name="index" class="index-select" id="index-select" hx-post="/change_graphe" hx-trigger="change"  hx-target='#graphe-to-change'>
+                        {% for key, value in select_input.items() %}
+                            <option value="{{key}}"> {{value}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <br>
+                <br>
+                <div class='favorites'>
+                    <button  class="favorites-button"></button>  <p class="inline-p">mettre en favoris ?</p>
+                </div>
+                <br>
+                <br>
+                <div id="progress-wrapper">
+                    <button id="progress-bar-trigger">réentrainement</button>
+                    <div id="progress-bar" style="background-color: Green; width: 0%;">&nbsp;</div>
+                    <div id="progress-bar-message"></div>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div id="graphe">
+                {% include graphe_selected %}
+            </div>
+            <div id="graphe-to-change">
+
+            </div>
+            <br>
+            <div id="table" hx-post="/change_table" hx-trigger="change from:#index-select" hx-include="[name='index']">
+                {% include table_selected %}
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

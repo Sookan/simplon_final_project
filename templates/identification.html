@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ url_for('static', path='/css/identification.css') }}" rel="stylesheet">
+    <title>log in</title>
+</head>
+<body>
+    <div class="main_center_box">
+        <div class="main_center_box_title">
+            <h4 class="box_title">  Log in :</h4>
+        </div>
+        <div class="main_center_box_content">
+            <form method = "post" >
+                <label for="email">Email : </label>
+                <br>
+                <input id="email" name="email" type="email" required>
+                <br>
+                <label for="pwd">Password : </label>
+                <br>
+                <input id="pwd" name="pwd" type="password" required>
+                <br>
+                <input id="submit" type="submit" name="submit" value="submit" >
+            </form>
+        </div>
+    </div>
+    {% if error == None %}
+    <div class="error_box disable" >
+        <h2 class="error_content"> {{error}}</h2>
+    </div>
+    {% else %}
+    <div class="error_box" >
+        <h2 class="error_content"> {{error}}</h2>
+    </div>
+    {% endif %}
+</body>
+<script src="{{ url_for('static', path='/js/identification.js') }}"></script>
+</html>
